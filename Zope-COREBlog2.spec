@@ -12,10 +12,11 @@ Source0:	http://coreblog.org/junk/%{zope_subname}%{header_load}.tgz
 # Source0-md5:	6a75d95b2068266b5dd59e1781eff54a
 URL:		http://coreblog.org/
 BuildRequires:	python
+BuildRequires:	rpmbuild(macros) >= 1.268
 %pyrequires_eq	python-modules
+Requires(post,postun):	/usr/sbin/installzopeproduct
 Requires:	Zope >= 2.7.7
 Requires:	Zope-CMFPlone >= 2.1.1
-Requires(post,postun):	/usr/sbin/installzopeproduct
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -27,8 +28,6 @@ System bloga/webloga oparty na Zope i Plone.
 
 %prep
 %setup -q -n %{zope_subname}
-
-%build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -47,16 +46,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 /usr/sbin/installzopeproduct %{_datadir}/%{name} %{zope_subname}
-if [ -f /var/lock/subsys/zope ]; then
-	/etc/rc.d/init.d/zope restart >&2
-fi
+%service -q zope restart
 
 %postun
 if [ "$1" = "0" ]; then
 	/usr/sbin/installzopeproduct -d %{zope_subname}
-	if [ -f /var/lock/subsys/zope ]; then
-		/etc/rc.d/init.d/zope restart >&2
-	fi
+	%service -q zope restart
 fi
 
 %files
