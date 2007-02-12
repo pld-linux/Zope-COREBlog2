@@ -2,7 +2,7 @@
 %define		sub_ver b
 %define		header_load _08b
 Summary:	Blog / Weblog / Web Nikki system on Zope and Plone
-Summary(pl):	System bloga/webloga oparty na Zope i Plone
+Summary(pl.UTF-8):   System bloga/webloga oparty na Zope i Plone
 Name:		Zope-%{zope_subname}
 Version:	0.8
 Release:	0.%{sub_ver}.1
@@ -23,7 +23,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Blog / Weblog / Web Nikki system on Zope and Plone.
 
-%description -l pl
+%description -l pl.UTF-8
 System bloga/webloga oparty na Zope i Plone.
 
 %prep
